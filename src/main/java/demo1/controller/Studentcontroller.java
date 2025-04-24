@@ -76,6 +76,17 @@ public class Studentcontroller {
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
+    
+    //isActive  true false param
+    @GetMapping("/student/filter")
+    public List<Student> getStudentsByActiveStatus(@RequestParam(required = false) Boolean isActive) {
+        if (isActive == null) {
+            return studentRepository.findAll(); // No filter applied
+        } else {
+            return studentRepository.findByIsActive(isActive);
+        }
+    }
+
 
     // Soft delete (deactivate) student
     @PutMapping("/{id}/deactivate")
